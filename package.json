@@ -1,6 +1,6 @@
 {
   "name": "jsdeserializer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "deserialize json into an object model pre defined, removing all extraneous information",
   "main": "deserializer.js",
   "scripts": {
