@@ -1,0 +1,15 @@
+{
+  "name": "jsdeserializer",
+  "version": "1.0.0",
+  "description": "deserialize json into an object model pre defined, removing all extraneous information",
+  "main": "deserializer.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "Deserelialize",
+    "javascript"
+  ],
+  "author": "joel wasserman",
+  "license": "MIT"
+}
