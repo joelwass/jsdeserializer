@@ -1,19 +1,20 @@
 {
   "name": "jsdeserializer",
   "version": "1.1.0",
-  "description": "deserialize json into an object model pre defined, removing all extraneous information",
+  "description": "deserialize json into an object model pre defined, removing all extraneous keys",
   "main": "deserializer.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "ava"
   },
   "keywords": [
-    "Deserelialize",
-    "javascript"
+    "deserialize",
+    "schema",
+    "model",
+    "json"
   ],
   "author": "joel wasserman",
   "license": "MIT",
   "devDependencies": {
-    "lodash.isequal": "^4.5.0",
-    "should": "^13.2.1"
+    "ava": "^0.25.0"
   }
 }

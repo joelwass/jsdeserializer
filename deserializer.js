@@ -10,14 +10,15 @@ const deepInsert = (input, model, returnObj) => {
         returnObj[key] = {}
         returnObj[key] = deepInsert(input[key], model[key], returnObj[key])
       }
-      else if (typeof model[key] !== 'object' && typeof input[key] !== 'object') {
+      // model contains type, make sure input matches
+      else if (typeof input[key] === typeof model[key]) {
         returnObj[key] = input[key]
-        return returnObj
       }
     }
   }
+  return returnObj
 }
 
 module.exports = {
-  assemble: (input, model) => deepInsert(input, model, {})
+  populate: (input, model) => deepInsert(input, model, {})
 }

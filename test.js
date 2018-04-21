@@ -1,8 +1,7 @@
+const test = require('ava')
 const deserializer = require('./deserializer')
-const should = require('should')
-const deepEqual = require('lodash.isequal')
 
-const shouldDeserializeMatchingObjects = () => {
+test('deserialize objects that match a model', (t) => {
   const input = {
     a: {
       b: 'blah'
@@ -17,12 +16,13 @@ const shouldDeserializeMatchingObjects = () => {
     c: ''
   }
 
-  const ret = deserializer.assemble(input, model)
-  // return value should match the input object because all keys existed in the model
-  deepEqual(ret, input).should.equal(true)
-}
+  const populated = deserializer.populate(input, model)
+  // return value should match the input object
+  // because all keys existed in the model and were the same type
+  t.deepEqual(input, populated)
+})
 
-const shouldDeserializeNonMatching = () => {
+test('deserialize objects that do not match a model', (t) => {
   const input = {
     a: {
       b: 'blah'
@@ -35,10 +35,38 @@ const shouldDeserializeNonMatching = () => {
     c: ''
   }
 
-  const ret = deserializer.assemble(input, model)
-  // return value should not match the input object because keys in the model existed, but were not the same type of the input
-  deepEqual(ret, {c: 'testing'}).should.equal(true)
-}
+  const ret = deserializer.populate(input, model)
+  // return value won't have b because it wasn't in the model
+  // and it won't have a because the model type for a was a string
+  t.deepEqual(ret, { c: 'testing' })
+})
 
-shouldDeserializeMatchingObjects()
-shouldDeserializeNonMatching()
+test('deserialize object that differ from model by type only', (t) => {
+  const input = {
+    a: {
+      b: 'blah'
+    },
+    c: 'testing',
+    d: 'not a number',
+    e: 'a string'
+  };
+
+  const model = {
+    a: {
+      b: ''
+    },
+    c: '',
+    d: 0,
+    e: ''
+  }
+
+  const ret = deserializer.populate(input, model)
+  // d's type doesn't match the model, so it will be left out
+  t.deepEqual(ret, {
+    a: {
+      b: 'blah'
+    },
+    c: 'testing',
+    e: 'a string'
+  })
+})
