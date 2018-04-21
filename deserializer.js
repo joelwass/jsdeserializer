@@ -1,4 +1,4 @@
-const deepInsert = (input, model, returnObj, options) => {
+const deepInsert = (input, model, returnObj = {}, options) => {
   const keys = Object.keys(model)
   for (var i = 0; i < keys.length; i++) {
     const key = keys[i]
@@ -10,16 +10,9 @@ const deepInsert = (input, model, returnObj, options) => {
       const strictTypeEquals = typeof input[key] === typeof model[key] && options.strict
       // otherwise if options are not set or strict is false, then as long as they aren't objects then populate
       const looseTypeEquals = typeof model[key] !== 'object' && typeof input[key] !== 'object' && !options.strict
-      // need to look inside to make sure child keys are also in the model
-      if (strictObjectEquals) {
-        // recurse
-        returnObj[key] = {}
-        returnObj[key] = deepInsert(input[key], model[key], returnObj[key], options)
-      }
-      // model contains type, make sure input type matches and strict is in the options
-      else if (strictTypeEquals || looseTypeEquals) {
-        returnObj[key] = input[key]
-      }
+
+      if (strictObjectEquals) returnObj[key] = deepInsert(input[key], model[key], returnObj[key], options)
+      else if (strictTypeEquals || looseTypeEquals) returnObj[key] = input[key]
     }
   }
   return returnObj
