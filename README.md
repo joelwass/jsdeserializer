@@ -13,7 +13,7 @@ Call the `populate` method with the first argument being the input object and th
 
 This method will return a new object with only the keys from the input object that match the model in name and type.
 ```
-  const deserializer = require('./deserializer')
+  const deserializer = require('jsdeserializer')
 
   const input = {
     a: {
