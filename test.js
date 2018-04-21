@@ -60,13 +60,48 @@ test('deserialize object that differ from model by type only', (t) => {
     e: ''
   }
 
-  const ret = deserializer.populate(input, model)
+  const options = { strict: true }
+
+  const ret = deserializer.populate(input, model, options)
   // d's type doesn't match the model, so it will be left out
   t.deepEqual(ret, {
     a: {
       b: 'blah'
     },
     c: 'testing',
+    e: 'a string'
+  })
+})
+
+test('deserialize object that differ from model by type but strict is set to false', (t) => {
+  const input = {
+    a: {
+      b: 'blah'
+    },
+    c: 'testing',
+    d: 'not a number',
+    e: 'a string'
+  };
+
+  const model = {
+    a: {
+      b: ''
+    },
+    c: '',
+    d: 0,
+    e: ''
+  }
+
+  const options = { strict: false }
+
+  const ret = deserializer.populate(input, model, options)
+  // d's type doesn't match the model, so it will be left out
+  t.deepEqual(ret, {
+    a: {
+      b: 'blah'
+    },
+    c: 'testing',
+    d: 'not a number',
     e: 'a string'
   })
 })
