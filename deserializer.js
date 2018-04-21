@@ -8,7 +8,7 @@ const deepInsert = (input, model, returnObj = {}, options) => {
       const strictObjectEquals = typeof model[key] === 'object' && typeof input[key] === 'object'
       // if the options are set to type strict, then make sure input and model are of the same type
       const strictTypeEquals = typeof input[key] === typeof model[key] && options.strict
-      // otherwise if options are not set or strict is false, then as long as they aren't objects then populate
+      // otherwise if strict is false, then as long as they aren't objects then populate
       const looseTypeEquals = typeof model[key] !== 'object' && typeof input[key] !== 'object' && !options.strict
 
       if (strictObjectEquals) returnObj[key] = deepInsert(input[key], model[key], returnObj[key], options)
@@ -19,5 +19,5 @@ const deepInsert = (input, model, returnObj = {}, options) => {
 }
 
 module.exports = {
-  populate: (input, model, options = { strict: false }) => deepInsert(input, model, {}, options)
+  populate: (input, model, options = { strict: true }) => deepInsert(input, model, {}, options)
 }

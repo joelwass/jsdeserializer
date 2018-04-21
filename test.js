@@ -41,6 +41,40 @@ test('deserialize objects that do not match a model', (t) => {
   t.deepEqual(ret, { c: 'testing' })
 })
 
+test('deserialize deep objects that do not match a model', (t) => {
+  const input = {
+    a: {
+      b: {
+        hello: 'world'
+      }
+    },
+    c: 'testing',
+    d: 0
+  };
+
+  const model = {
+    a: {
+      b: {
+        hello: ''
+      }
+    },
+    c: '',
+    d: ''
+  }
+
+  const ret = deserializer.populate(input, model)
+  // return value won't have b because it wasn't in the model
+  // and it won't have a because the model type for a was a string
+  t.deepEqual(ret, { 
+    a: {
+      b: {
+        hello: 'world'
+      }
+    },
+    c: 'testing'
+   })
+})
+
 test('deserialize object that differ from model by type only', (t) => {
   const input = {
     a: {
