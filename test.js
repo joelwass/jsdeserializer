@@ -129,7 +129,7 @@ test('deserialize object that differ from model by type but strict is set to fal
   const options = { strict: false }
 
   const ret = deserializer.populate(input, model, options)
-  // d's type doesn't match the model, so it will be left out
+  // d's type doesn't match the model but it will be left in (strict:false)
   t.deepEqual(ret, {
     a: {
       b: 'blah'

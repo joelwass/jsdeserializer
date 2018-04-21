@@ -1,4 +1,5 @@
-const deepInsert = (input, model, returnObj = {}, options) => {
+const populate = (input, model, options = { strict: true }) => {
+  const returnObj = {}
   const keys = Object.keys(model)
   for (var i = 0; i < keys.length; i++) {
     const key = keys[i]
@@ -11,7 +12,7 @@ const deepInsert = (input, model, returnObj = {}, options) => {
       // otherwise if strict is false, then as long as they aren't objects then populate
       const looseTypeEquals = typeof model[key] !== 'object' && typeof input[key] !== 'object' && !options.strict
 
-      if (strictObjectEquals) returnObj[key] = deepInsert(input[key], model[key], returnObj[key], options)
+      if (strictObjectEquals) returnObj[key] = populate(input[key], model[key], options)
       else if (strictTypeEquals || looseTypeEquals) returnObj[key] = input[key]
     }
   }
@@ -19,5 +20,5 @@ const deepInsert = (input, model, returnObj = {}, options) => {
 }
 
 module.exports = {
-  populate: (input, model, options = { strict: true }) => deepInsert(input, model, {}, options)
+  populate
 }
