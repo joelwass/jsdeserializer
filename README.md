@@ -1,17 +1,19 @@
-### JS Deserializer
+# JS Deserializer
 
-Deserialize json into an object model pre defined, removing all extraneous information
+Deserialize JSON into an object model pre-defined, removing all extraneous keys
 
-# Usage
+## Usage
 
 Install the package
-* `$ npm -i --save jsdeserializer`
-
-Call deserializer.assemble with the first argument being the input JSON object and the second argument being the model you'd like to conform your data to.
-
-This method will return a JSON object
+```bash
+$ npm install jsdeserializer
 ```
-  const deserializer = require('./deserializer')
+
+Call the `populate` method with the first argument being the input object and the second argument being the model you'd like to conform your data to.
+
+This method will return a new object with only the keys from the input object that match the model in name and type.
+```
+  const deserializer = require('jsdeserializer')
 
   const input = {
     a: {
@@ -25,10 +27,10 @@ This method will return a JSON object
     c: ''
   }
 
-  const ret = deserializer.assemble(input, model)
-  // return value should not match the input object because keys in the model existed, but were not the same type of the input
-  deepEqual(ret, {c: 'testing'}).should.equal(true)
+  const populated = deserializer.populate(input, model)
+  // returns { c: 'testing' }
+  
 ```
 
-# License
+## License
 MIT
