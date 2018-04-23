@@ -14,9 +14,11 @@ $ npm install tailorr
 
 * input is the object desired to be trimmed
 * model is the object that describes the pattern you'd like to trim to
-* Options is an optional third argument that currently takes in one key, `strict`. If strict is true or options are null, then type strictness will be applied, otherwise key value pairs that don't match type won't be populated.
+* options is an optional third argument that currently takes in one key, `strict`. If strict is true or options are null, then type strictness will be applied, otherwise key value pairs that don't match type won't be populated.
 
-This method will return a new object with only the keys from the input object that match the model in name and type (assuming strict).
+This method will return a new object with all of the keys of the model with the values populated from the input object, effectively trimming the input into the model.
+
+*If the input object does not contain the corresponding model key or the types do not match (assuming strict), the value in the return object will be set to null*
 
 ## Example
 ```
@@ -39,7 +41,7 @@ This method will return a new object with only the keys from the input object th
   }
 
   const populated = tailorr.trim(input, model, options)
-  // returns { c: 'testing' }
+  // returns { a: null, c: 'testing' }
   
 ```
 

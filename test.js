@@ -38,7 +38,7 @@ test('trim objects that do not match a model', (t) => {
   const ret = tailorr.trim(input, model)
   // return value won't have b because it wasn't in the model
   // and it won't have a because the model type for a was a string
-  t.deepEqual(ret, { c: 'testing' })
+  t.deepEqual(ret, { a: null, c: 'testing' })
 })
 
 test('trim deep objects that do not match a model', (t) => {
@@ -71,7 +71,8 @@ test('trim deep objects that do not match a model', (t) => {
         hello: 'world'
       }
     },
-    c: 'testing'
+    c: 'testing',
+    d: null
    })
 })
 
@@ -103,6 +104,7 @@ test('trim object that differ from model by type only', (t) => {
       b: 'blah'
     },
     c: 'testing',
+    d: null,
     e: 'a string'
   })
 })
