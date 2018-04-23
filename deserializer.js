@@ -9,7 +9,7 @@ const deepInsert = (input, model, returnObj, options = { strict: true }) => {
       // could be an array though
       const arrays = objects && Array.isArray(model[key]) && Array.isArray(input[key])
       // if the options are set to type strict, then make sure input and model are of the same type
-      const sameType = typeof input[key] === typeof model[key] && options.strict
+      const sameKeyStrict = typeof input[key] === typeof model[key] && options.strict
       // otherwise if strict is false, then as long as they aren't objects then populate
       const sameKey = typeof model[key] !== 'object' && typeof input[key] !== 'object' && !options.strict
 
@@ -17,7 +17,7 @@ const deepInsert = (input, model, returnObj, options = { strict: true }) => {
         if (arrays) returnObj[key] = deepInsert(input[key], model[key], [], options)
         else returnObj[key] = deepInsert(input[key], model[key], {}, options)
       }
-      else if (sameType || sameKey) returnObj[key] = input[key]
+      else if (sameKeyStrict || sameKey) returnObj[key] = input[key]
     }
   }
   return returnObj
