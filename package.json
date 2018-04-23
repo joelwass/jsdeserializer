@@ -1,6 +1,6 @@
 {
   "name": "tailorr",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Conform a data object to a pre-defined pattern/model, trimming all extraneous keys",
   "main": "tailorr.js",
   "scripts": {
