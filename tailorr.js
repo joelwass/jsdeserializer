@@ -1,4 +1,4 @@
-const deepInsert = (input, model, returnObj, options = { strict: true }) => {
+const populate = (input, model, returnObj, options = { strict: true }) => {
   const keys = Object.keys(model)
   for (var i = 0; i < keys.length; i++) {
     const key = keys[i]
@@ -14,8 +14,8 @@ const deepInsert = (input, model, returnObj, options = { strict: true }) => {
       const sameKey = typeof model[key] !== 'object' && typeof input[key] !== 'object' && !options.strict
 
       if (objects) {
-        if (arrays) returnObj[key] = deepInsert(input[key], model[key], [], options)
-        else returnObj[key] = deepInsert(input[key], model[key], {}, options)
+        if (arrays) returnObj[key] = populate(input[key], model[key], [], options)
+        else returnObj[key] = populate(input[key], model[key], {}, options)
       }
       else if (sameKeyStrict || sameKey) returnObj[key] = input[key]
     }
@@ -24,5 +24,5 @@ const deepInsert = (input, model, returnObj, options = { strict: true }) => {
 }
 
 module.exports = {
-  populate: (input, model, options) => deepInsert(input, model, {}, options)
+  trim: (input, model, options) => populate(input, model, {}, options)
 }

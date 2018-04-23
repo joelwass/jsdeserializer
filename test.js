@@ -1,7 +1,7 @@
 const test = require('ava')
-const deserializer = require('./deserializer')
+const tailorr = require('./tailorr')
 
-test('deserialize objects that match a model', (t) => {
+test('trim objects that match a model', (t) => {
   const input = {
     a: {
       b: 'blah'
@@ -16,13 +16,13 @@ test('deserialize objects that match a model', (t) => {
     c: ''
   }
 
-  const populated = deserializer.populate(input, model)
+  const populated = tailorr.trim(input, model)
   // return value should match the input object
   // because all keys existed in the model and were the same type
   t.deepEqual(input, populated)
 })
 
-test('deserialize objects that do not match a model', (t) => {
+test('trim objects that do not match a model', (t) => {
   const input = {
     a: {
       b: 'blah'
@@ -35,13 +35,13 @@ test('deserialize objects that do not match a model', (t) => {
     c: ''
   }
 
-  const ret = deserializer.populate(input, model)
+  const ret = tailorr.trim(input, model)
   // return value won't have b because it wasn't in the model
   // and it won't have a because the model type for a was a string
   t.deepEqual(ret, { c: 'testing' })
 })
 
-test('deserialize deep objects that do not match a model', (t) => {
+test('trim deep objects that do not match a model', (t) => {
   const input = {
     a: {
       b: {
@@ -62,7 +62,7 @@ test('deserialize deep objects that do not match a model', (t) => {
     d: ''
   }
 
-  const ret = deserializer.populate(input, model)
+  const ret = tailorr.trim(input, model)
   // return value won't have b because it wasn't in the model
   // and it won't have a because the model type for a was a string
   t.deepEqual(ret, { 
@@ -75,7 +75,7 @@ test('deserialize deep objects that do not match a model', (t) => {
    })
 })
 
-test('deserialize object that differ from model by type only', (t) => {
+test('trim object that differ from model by type only', (t) => {
   const input = {
     a: {
       b: 'blah'
@@ -96,7 +96,7 @@ test('deserialize object that differ from model by type only', (t) => {
 
   const options = { strict: true }
 
-  const ret = deserializer.populate(input, model, options)
+  const ret = tailorr.trim(input, model, options)
   // d's type doesn't match the model, so it will be left out
   t.deepEqual(ret, {
     a: {
@@ -107,7 +107,7 @@ test('deserialize object that differ from model by type only', (t) => {
   })
 })
 
-test('deserialize object that differ from model by type but strict is set to false', (t) => {
+test('trim object that differ from model by type but strict is set to false', (t) => {
   const input = {
     a: {
       b: 'blah'
@@ -128,7 +128,7 @@ test('deserialize object that differ from model by type but strict is set to fal
 
   const options = { strict: false }
 
-  const ret = deserializer.populate(input, model, options)
+  const ret = tailorr.trim(input, model, options)
   // d's type doesn't match the model but it will be left in (strict:false)
   t.deepEqual(ret, {
     a: {
@@ -140,7 +140,7 @@ test('deserialize object that differ from model by type but strict is set to fal
   })
 })
 
-test('deserialize object that contains arrays', (t) => {
+test('trim object that contains arrays', (t) => {
   const input = {
     a: {
       b: ['blah', ['a nested array']]
@@ -160,7 +160,7 @@ test('deserialize object that contains arrays', (t) => {
 
   const options = { strict: true }
 
-  const ret = deserializer.populate(input, model, options)
+  const ret = tailorr.trim(input, model, options)
   // should remove e but nothing else
   t.deepEqual(ret, {
     a: {

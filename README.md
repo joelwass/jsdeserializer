@@ -1,21 +1,26 @@
-# JS Deserializer
+# Tailorr 
 
-Deserialize JSON into an object model pre-defined, removing all extraneous keys
+Conform a data object to a pre-defined pattern/model, trimming all extraneous keys
+
+Motivated by GoLang Marshall
 
 ## Usage
 
 Install the package
 ```bash
-$ npm install jsdeserializer
+$ npm install tailorr
 ```
+#### trim(input, model [, options])
 
-Call the `populate` method with the first argument being the input object and the second argument being the model you'd like to conform your data to.
-
-There is an optional third argument, `options`. Options currently takes in one key, `strict`. If strict is true or options are null, then type strictness will be applied, otherwise key value pairs that aren't objects will be populated.
+* input is the object desired to be trimmed
+* model is the object that describes the pattern you'd like to trim to
+* Options is an optional third argument that currently takes in one key, `strict`. If strict is true or options are null, then type strictness will be applied, otherwise key value pairs that don't match type won't be populated.
 
 This method will return a new object with only the keys from the input object that match the model in name and type (assuming strict).
+
+## Example
 ```
-  const deserializer = require('jsdeserializer')
+  const tailorr = require('tailorr')
 
   const input = {
     a: {
@@ -33,7 +38,7 @@ This method will return a new object with only the keys from the input object th
     strict: true
   }
 
-  const populated = deserializer.populate(input, model, options)
+  const populated = tailorr.trim(input, model, options)
   // returns { c: 'testing' }
   
 ```

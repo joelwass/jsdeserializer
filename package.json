@@ -1,15 +1,17 @@
 {
-  "name": "jsdeserializer",
+  "name": "tailorr",
   "version": "1.2.0",
-  "description": "deserialize json into an object model pre defined, removing all extraneous keys",
-  "main": "deserializer.js",
+  "description": "Conform a data object to a pre-defined pattern/model, trimming all extraneous keys",
+  "main": "tailorr.js",
   "scripts": {
     "test": "ava"
   },
   "keywords": [
-    "deserialize",
+    "tailorr",
     "schema",
+    "pattern",
     "model",
+    "marshall",
     "json"
   ],
   "author": "joel wasserman",
