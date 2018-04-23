@@ -139,3 +139,34 @@ test('deserialize object that differ from model by type but strict is set to fal
     e: 'a string'
   })
 })
+
+test('deserialize object that contains arrays', (t) => {
+  const input = {
+    a: {
+      b: ['blah', ['a nested array']]
+    },
+    c: 'testing',
+    d: [ { x: 'object in array' }, { y: 'another one' } ],
+    e: 'a string'
+  };
+
+  const model = {
+    a: {
+      b: ['', ['']]
+    },
+    c: '',
+    d: [ { x: '', }, { y: '' } ],
+  }
+
+  const options = { strict: true }
+
+  const ret = deserializer.populate(input, model, options)
+  // should remove e but nothing else
+  t.deepEqual(ret, {
+    a: {
+      b: ['blah', ['a nested array']]
+    },
+    c: 'testing',
+    d: [ { x: 'object in array' }, { y: 'another one' } ]
+  })
+})
